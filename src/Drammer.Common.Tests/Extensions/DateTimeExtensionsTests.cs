@@ -20,4 +20,59 @@ public sealed class DateTimeExtensionsTests
         // assert
         result.Year.Should().Be(newYear);
     }
+
+    [Fact]
+    public void GetMinDate_CurrentValueIsMinDate_ShouldReturnMinDate()
+    {
+        // arrange
+        var minDate = (DateTime?)DateTime.MinValue;
+
+        // act
+        var result = minDate.GetMinDate(DateTime.Now);
+
+        // assert
+        result.Should().Be(DateTime.MinValue);
+    }
+
+    [Fact]
+    public void GetMinDate_GivenValueIsMinDate_ShouldReturnMinDate()
+    {
+        // arrange
+        var maxDate = (DateTime?)DateTime.MaxValue;
+        var now = DateTime.Now;
+
+        // act
+        var result = maxDate.GetMinDate(now);
+
+        // assert
+        result.Should().Be(now);
+    }
+
+    [Fact]
+    public void GetMaxDate_CurrentValueIsMaxDate_ShouldReturnMaxDate()
+    {
+        // arrange
+        var minDate = (DateTime?)DateTime.MinValue;
+        var now = DateTime.Now;
+
+        // act
+        var result = minDate.GetMaxDate(now);
+
+        // assert
+        result.Should().Be(now);
+    }
+
+    [Fact]
+    public void GetMaxDate_GivenValueIsMaxDate_ShouldReturnMaxDate()
+    {
+        // arrange
+        var maxDate = (DateTime?)DateTime.MaxValue;
+        var now = DateTime.Now;
+
+        // act
+        var result = maxDate.GetMaxDate(now);
+
+        // assert
+        result.Should().Be(maxDate);
+    }
 }

@@ -9,7 +9,7 @@ public static class StringExtensions
     [return: NotNullIfNotNull(nameof(emailAddress))]
     public static string? ObfuscateEmailAddress(this string? emailAddress)
     {
-        if (string.IsNullOrWhiteSpace(emailAddress) || !emailAddress.Contains("@"))
+        if (string.IsNullOrWhiteSpace(emailAddress) || !emailAddress.Contains('@'))
         {
             return emailAddress;
         }
