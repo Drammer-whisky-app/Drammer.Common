@@ -50,4 +50,16 @@ public sealed class StringExtensionsTests
         // assert
         result.Should().BeNull();
     }
+
+    [Theory]
+    [InlineData("abc123", "abc123")]
+    [InlineData("abc123!@#$%^&*()", "abc123!@#$%^&*()")]
+    public void SanitizeText_ReturnsSanitizedText(string input, string expected)
+    {
+        // act
+        var result = input.SanitizeText();
+
+        // assert
+        result.Should().Be(expected);
+    }
 }

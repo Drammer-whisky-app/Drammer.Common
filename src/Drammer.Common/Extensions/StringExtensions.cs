@@ -1,10 +1,11 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Drammer.Common.Extensions;
 
-public static class StringExtensions
+public static partial class StringExtensions
 {
     [return: NotNullIfNotNull(nameof(emailAddress))]
     public static string? ObfuscateEmailAddress(this string? emailAddress)
@@ -74,4 +75,18 @@ public static class StringExtensions
 
         return result;
     }
+
+    [return: NotNullIfNotNull(nameof(input))]
+    public static string? SanitizeText(this string? input)
+    {
+        if (string.IsNullOrEmpty(input))
+        {
+            return null;
+        }
+
+        return SanitizeRegex().Replace(input, string.Empty).Trim();
+    }
+
+    [GeneratedRegex("[^\\w\\d\\s.,+-\\\\&#$%^(()\"'!*|\\[\\]]", RegexOptions.IgnoreCase)]
+    private static partial Regex SanitizeRegex();
 }
