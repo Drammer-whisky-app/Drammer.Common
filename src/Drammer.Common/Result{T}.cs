@@ -2,12 +2,12 @@
 
 namespace Drammer.Common;
 
-public record Status<T> : Status
+public record Result<T> : Result
 {
     /// <summary>
-    /// Initializes a new instance of the <see cref="Status{T}"/> class.
+    /// Initializes a new instance of the <see cref="Result{T}"/> class.
     /// </summary>
-    /// <param name="success">
+    /// <param name="isSuccess">
     /// The success.
     /// </param>
     /// <param name="message">
@@ -16,23 +16,23 @@ public record Status<T> : Status
     /// <param name="exception">
     /// The exception.
     /// </param>
-    public Status(bool success, string? message = null, Exception? exception = null)
-        : base(success, message, exception)
+    internal Result(bool isSuccess, string? message = null, Exception? exception = null)
+        : base(isSuccess, message, exception)
     {
-        Success = success;
+        IsSuccess = isSuccess;
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="Status{T}"/> class.
+    /// Initializes a new instance of the <see cref="Result{T}"/> class.
     /// </summary>
     /// <param name="value">
     /// The value.
     /// </param>
-    public Status(T value)
+    internal Result(T value)
         : base(true)
     {
         Value = value;
-        Success = true;
+        IsSuccess = true;
     }
 
     /// <summary>
@@ -42,5 +42,5 @@ public record Status<T> : Status
 
     /// <inheritdoc />
     [MemberNotNullWhen(true, nameof(Value))]
-    public override bool Success { get; }
+    public override bool IsSuccess { get; }
 }

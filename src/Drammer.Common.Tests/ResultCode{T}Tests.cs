@@ -14,10 +14,10 @@ public sealed class StatusCodeTypedTests
         var code = 2;
 
         // act
-        var status = new StatusCode<string>(success, code, message, exception);
+        var status = new ResultCode<string>(success, code, message, exception);
 
         // assert
-        status.Success.Should().BeTrue();
+        status.IsSuccess.Should().BeTrue();
         status.Message.Should().BeNull();
         status.Exception.Should().BeNull();
         status.Code.Should().Be(code);
@@ -33,10 +33,10 @@ public sealed class StatusCodeTypedTests
         var code = 3;
 
         // act
-        var status = new StatusCode<string>(success, code, message, exception);
+        var status = new ResultCode<string>(success, code, message, exception);
 
         // assert
-        status.Success.Should().BeFalse();
+        status.IsSuccess.Should().BeFalse();
         status.Message.Should().BeNull();
         status.Exception.Should().BeNull();
         status.Code.Should().Be(code);
@@ -52,10 +52,10 @@ public sealed class StatusCodeTypedTests
         var code = 4;
 
         // act
-        var status = new StatusCode<string>(success, code, message, exception);
+        var status = new ResultCode<string>(success, code, message, exception);
 
         // assert
-        status.Success.Should().BeTrue();
+        status.IsSuccess.Should().BeTrue();
         status.Message.Should().Be(message);
         status.Exception.Should().Be(exception);
         status.Code.Should().Be(code);
@@ -68,10 +68,10 @@ public sealed class StatusCodeTypedTests
         var value = "value";
 
         // act
-        var status = new StatusCode<string>(value);
+        var status = new ResultCode<string>(value);
 
         // assert
-        status.Success.Should().BeTrue();
+        status.IsSuccess.Should().BeTrue();
         status.Value.Should().Be(value);
         status.Code.Should().Be(0);
     }
@@ -84,11 +84,45 @@ public sealed class StatusCodeTypedTests
         var code = 5;
 
         // act
-        var status = new StatusCode<string>(value, code);
+        var status = new ResultCode<string>(value, code);
 
         // assert
-        status.Success.Should().BeTrue();
+        status.IsSuccess.Should().BeTrue();
         status.Value.Should().Be(value);
+        status.Code.Should().Be(code);
+    }
+
+    [Fact]
+    public void Success_ValueNotNull_SuccessTrue()
+    {
+        // arrange
+        var value = "value";
+        int code = 6;
+
+        // act
+        var status = Result.Success(value, code);
+
+        // assert
+        status.IsSuccess.Should().BeTrue();
+        status.Value.Should().Be(value);
+        status.Code.Should().Be(code);
+    }
+
+    [Fact]
+    public void Failure_MessageNotNullAndExceptionNotNull_SuccessFalse()
+    {
+        // arrange
+        var message = "message";
+        var exception = new Exception();
+        int code = 7;
+
+        // act
+        var status = Result.Failure<string>(code, message, exception);
+
+        // assert
+        status.IsSuccess.Should().BeFalse();
+        status.Message.Should().Be(message);
+        status.Exception.Should().Be(exception);
         status.Code.Should().Be(code);
     }
 }
