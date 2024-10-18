@@ -14,7 +14,7 @@ public record Result
     /// <param name="exception">
     /// The exception.
     /// </param>
-    internal Result(bool isSuccess, string? message = null, Exception? exception = null)
+    protected internal Result(bool isSuccess, string? message = null, Exception? exception = null)
     {
         IsSuccess = isSuccess;
         Message = message;

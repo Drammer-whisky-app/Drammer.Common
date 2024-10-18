@@ -16,7 +16,7 @@ public record Result<T> : Result
     /// <param name="exception">
     /// The exception.
     /// </param>
-    internal Result(bool isSuccess, string? message = null, Exception? exception = null)
+    protected internal Result(bool isSuccess, string? message = null, Exception? exception = null)
         : base(isSuccess, message, exception)
     {
         IsSuccess = isSuccess;
@@ -28,7 +28,7 @@ public record Result<T> : Result
     /// <param name="value">
     /// The value.
     /// </param>
-    internal Result(T value)
+    protected internal Result(T value)
         : base(true)
     {
         Value = value;
