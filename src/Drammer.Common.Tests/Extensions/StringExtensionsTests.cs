@@ -1,10 +1,11 @@
 ﻿using Drammer.Common.Extensions;
-using FluentAssertions;
 
 namespace Drammer.Common.Tests.Extensions;
 
 public sealed class StringExtensionsTests
 {
+    private readonly Fixture _fixture = new();
+
     [Theory]
     [InlineData("test@drammer.com", "te**@drammer.com")]
     [InlineData("tes@drammer.com", "t**@drammer.com")]
@@ -61,5 +62,96 @@ public sealed class StringExtensionsTests
 
         // assert
         result.Should().Be(expected);
+    }
+
+    [Fact]
+    public void AddUrlParameters_WhenUrlIsNull_ReturnUrl()
+    {
+        // arrange
+        var input = (string?)null;
+
+        // act
+        var result = input.AddUrlParameters(null);
+
+        // assert
+        result.Should().Be(input);
+    }
+
+    [Fact]
+    public void AddUrlParameters_WhenParametersAreNull_ReturnUrl()
+    {
+        // arrange
+        var input = _fixture.Create<string>();
+
+        // act
+        var result = input.AddUrlParameters(null);
+
+        // assert
+        result.Should().Be(input);
+    }
+
+    [Fact]
+    public void AddUrlParameters_WithParameters_ReturnUrl()
+    {
+        // arrange
+        var input = "https://localhost";
+
+        // act
+        var result = input.AddUrlParameters(new {a = "b", c = "d"});
+
+        // assert
+        result.Should().Be("https://localhost?a=b&c=d");
+    }
+
+    [Fact]
+    public void AddUrlParameters_UrlContainsParametersWithParameters_ReturnUrl()
+    {
+        // arrange
+        var input = "https://localhost?1=2";
+
+        // act
+        var result = input.AddUrlParameters(new {a = "b"});
+
+        // assert
+        result.Should().Be("https://localhost?1=2&a=b");
+    }
+
+    [Theory]
+    [InlineData("http://localhost", "https://localhost")]
+    [InlineData("//localhost", "https://localhost")]
+    [InlineData("https://localhost", "https://localhost")]
+    public void ToHttps_HttpsUrl(string input, string expected)
+    {
+        // act
+        var result = input.ToHttps();
+
+        // assert
+        result.Should().Be(expected);
+    }
+
+    [Fact]
+    public void ChangeTopLevelDomain_TldChanged()
+    {
+        // arrange
+        const string Input = "https://localhost.com/asdf";
+
+        // act
+        var result = Input.ChangeTopLevelDomain("localhost.net");
+
+        // assert
+        result.Should().Be("https://localhost.net/asdf");
+    }
+
+    [Fact]
+    public void RemoveHtmlTags_TagsRemoved()
+    {
+        // arrange
+        const string Input = "<html><body>text<img src=\"\"/><p>text</p></body></html>";
+
+        // act
+        var result = Input.RemoveHtmlTags();
+
+        // assert
+        result.Should().Be("texttext");
     }
 }
