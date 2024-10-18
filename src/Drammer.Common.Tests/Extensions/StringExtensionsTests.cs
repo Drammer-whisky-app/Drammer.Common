@@ -154,4 +154,13 @@ public sealed class StringExtensionsTests
         // assert
         result.Should().Be("texttext");
     }
+
+    [Theory]
+    [InlineData("abc", "abc")]
+    [InlineData("00abc0", "abc0")]
+    [InlineData("  00abc   ", "abc")]
+    public void RemoveLeadingZeros(string input, string expected)
+    {
+        Assert.Equal(expected, input.RemoveLeadingZeros());
+    }
 }

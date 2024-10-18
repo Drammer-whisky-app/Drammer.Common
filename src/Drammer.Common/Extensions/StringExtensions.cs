@@ -87,6 +87,12 @@ public static partial class StringExtensions
         return SanitizeRegex().Replace(input, string.Empty).Trim();
     }
 
+    [return: NotNullIfNotNull("text")]
+    public static string? RemoveLeadingZeros(this string? text)
+    {
+        return string.IsNullOrEmpty(text) ? text : text.Trim().TrimStart('0');
+    }
+
     /// <summary>
     /// Adds parameters to a URL.
     /// </summary>
