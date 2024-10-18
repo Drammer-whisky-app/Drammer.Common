@@ -207,6 +207,22 @@ public static partial class StringExtensions
         // normalize
         return NormalizeHtmlRegex().Replace(noHtml, " ");
     }
+    
+    /// <summary>
+    /// Count the number of words in a string.
+    /// </summary>
+    /// <param name="text">The input text.</param>
+    public static int CountWords(this string? text)
+    {
+        if (string.IsNullOrWhiteSpace(text))
+        {
+            return 0;
+        }
+
+        var punctuationCharacters = text.Where(char.IsPunctuation).Distinct().ToArray();
+        var words = text.Split().Select(x => x.Trim(punctuationCharacters));
+        return words.Count(x => !string.IsNullOrWhiteSpace(x));
+    }
 
     [GeneratedRegex("[^\\w\\d\\s.,+-\\\\&#$%^(()\"'!*|\\[\\]]", RegexOptions.IgnoreCase)]
     private static partial Regex SanitizeRegex();
