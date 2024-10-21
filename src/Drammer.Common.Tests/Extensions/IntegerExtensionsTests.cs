@@ -17,4 +17,18 @@ public sealed class IntegerExtensionsTests
         // assert
         result.Should().Be(expected);
     }
+
+    [Fact]
+    public void FloorToNearestMultipleOf_WhenValueIsNegative_ShouldThrowArgumentOutOfRangeException()
+    {
+        // arrange
+        var input = -9;
+        var nearest = -10;
+
+        // act
+        Action act = () => input.FloorToNearest(nearest);
+
+        // assert
+        act.Should().Throw<ArgumentOutOfRangeException>();
+    }
 }

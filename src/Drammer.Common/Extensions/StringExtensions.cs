@@ -5,8 +5,16 @@ using System.Text.RegularExpressions;
 
 namespace Drammer.Common.Extensions;
 
+/// <summary>
+/// The string extensions.
+/// </summary>
 public static partial class StringExtensions
 {
+    /// <summary>
+    /// Obfuscates an email address.
+    /// </summary>
+    /// <param name="emailAddress">The email address.</param>
+    /// <returns>A <see cref="string"/>.</returns>
     [return: NotNullIfNotNull(nameof(emailAddress))]
     public static string? ObfuscateEmailAddress(this string? emailAddress)
     {
@@ -169,6 +177,13 @@ public static partial class StringExtensions
         return input;
     }
 
+    /// <summary>
+    /// Changes the top level domain of a URL.
+    /// </summary>
+    /// <param name="input">The input url.</param>
+    /// <param name="tld">The top level domain.</param>
+    /// <returns>A <see cref="string"/>.</returns>
+    /// <exception cref="ArgumentNullException">Thrown when <see cref="tld"/> is invalid.</exception>
     [return: NotNullIfNotNull(nameof(input))]
     public static string? ChangeTopLevelDomain(this string? input, string tld)
     {
@@ -192,6 +207,11 @@ public static partial class StringExtensions
         return input.ToLower().Replace(uri.Host, tld.ToLower());
     }
 
+    /// <summary>
+    /// Removes all HTML tags from a string.
+    /// </summary>
+    /// <param name="input">The input.</param>
+    /// <returns>A <see cref="string"/>.</returns>
     [return: NotNullIfNotNull(nameof(input))]
     public static string? RemoveHtmlTags(this string? input)
     {

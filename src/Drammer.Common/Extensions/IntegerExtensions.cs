@@ -1,5 +1,8 @@
 ﻿namespace Drammer.Common.Extensions;
 
+/// <summary>
+/// The integer extensions.
+/// </summary>
 public static class IntegerExtensions
 {
     /// <summary>

@@ -163,4 +163,18 @@ public sealed class StringExtensionsTests
     {
         Assert.Equal(expected, input.RemoveLeadingZeros());
     }
+
+    [Theory]
+    [InlineData("abc", 1)]
+    [InlineData("abc.def", 1)]
+    [InlineData("abc def", 2)]
+    [InlineData("abc. def", 2)]
+    public void CountWords_ReturnsWordCount(string text, int expected)
+    {
+        // act
+        var result = text.CountWords();
+
+        // assert
+        result.Should().Be(expected);
+    }
 }
