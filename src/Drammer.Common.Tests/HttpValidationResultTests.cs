@@ -18,7 +18,7 @@ public sealed class HttpValidationResultTests
         };
 
         // act
-        var result = HttpValidationResult.Create(validationErrors);
+        var result = HttpValidationResult.Create(validationErrors, httpStatusCode);
 
         // assert
         result.HttpStatusCode.Should().Be(httpStatusCode);
@@ -37,7 +37,7 @@ public sealed class HttpValidationResultTests
         };
 
         // act
-        var result = HttpValidationResult.Create<string>(validationErrors);
+        var result = HttpValidationResult.Create<string>(validationErrors, httpStatusCode);
 
         // assert
         result.HttpStatusCode.Should().Be(httpStatusCode);
