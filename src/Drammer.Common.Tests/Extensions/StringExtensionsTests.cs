@@ -177,4 +177,17 @@ public sealed class StringExtensionsTests
         // assert
         result.Should().Be(expected);
     }
+
+    [Theory]
+    [InlineData(null, "test", "test", null)]
+    [InlineData("abc def", "def", "ghi", "abc ghi")]
+    [InlineData("abc abc abc", "abc", "ghi", "abc abc ghi")]
+    public void ReplaceLastOccurrence_ReturnsReplacedText(string? input, string search, string replace, string? expected)
+    {
+        // act
+        var result = input.ReplaceLastOccurrence(search, replace);
+
+        // assert
+        result.Should().Be(expected);
+    }
 }

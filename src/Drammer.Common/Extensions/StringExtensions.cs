@@ -43,6 +43,11 @@ public static partial class StringExtensions
         return sb.ToString();
     }
 
+    /// <summary>
+    /// Convert a string to a decimal.
+    /// </summary>
+    /// <param name="value">The input value.</param>
+    /// <returns>A <see cref="decimal"/> value.</returns>
     public static decimal? ToDecimal(this string? value)
     {
         if (string.IsNullOrEmpty(value))
@@ -84,6 +89,11 @@ public static partial class StringExtensions
         return result;
     }
 
+    /// <summary>
+    /// Removes all non-alphanumeric characters from a string.
+    /// </summary>
+    /// <param name="input">The input.</param>
+    /// <returns>A <see cref="string"/>.</returns>
     [return: NotNullIfNotNull(nameof(input))]
     public static string? SanitizeText(this string? input)
     {
@@ -95,7 +105,12 @@ public static partial class StringExtensions
         return SanitizeRegex().Replace(input, string.Empty).Trim();
     }
 
-    [return: NotNullIfNotNull("text")]
+    /// <summary>
+    /// Removes leading zeros from a string.
+    /// </summary>
+    /// <param name="text">The text.</param>
+    /// <returns>A <see cref="string"/>.</returns>
+    [return: NotNullIfNotNull(nameof(text))]
     public static string? RemoveLeadingZeros(this string? text)
     {
         return string.IsNullOrEmpty(text) ? text : text.Trim().TrimStart('0');
@@ -242,6 +257,39 @@ public static partial class StringExtensions
         var punctuationCharacters = text.Where(char.IsPunctuation).Distinct().ToArray();
         var words = text.Split().Select(x => x.Trim(punctuationCharacters));
         return words.Count(x => !string.IsNullOrWhiteSpace(x));
+    }
+
+    /// <summary>
+    /// Replace the last occurrence in a string.
+    /// </summary>
+    /// <param name="source">
+    /// The source.
+    /// </param>
+    /// <param name="find">
+    /// The find.
+    /// </param>
+    /// <param name="replace">
+    /// The replacement value.
+    /// </param>
+    /// <returns>
+    /// The <see cref="string"/>.
+    /// </returns>
+    [return: NotNullIfNotNull(nameof(source))]
+    public static string? ReplaceLastOccurrence(this string? source, string find, string replace)
+    {
+        if (source == null)
+        {
+            return null;
+        }
+
+        var place = source.LastIndexOf(find, StringComparison.InvariantCultureIgnoreCase);
+
+        if (place == -1)
+        {
+            return source;
+        }
+
+        return source.Remove(place, find.Length).Insert(place, replace);
     }
 
     [GeneratedRegex("[^\\w\\d\\s.,+-\\\\&#$%^(()\"'!*|\\[\\]]", RegexOptions.IgnoreCase)]
