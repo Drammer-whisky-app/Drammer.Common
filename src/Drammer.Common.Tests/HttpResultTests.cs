@@ -102,6 +102,27 @@ public sealed class HttpResultTests
     }
 
     [Fact]
+    public void NotFound_ReturnsHttpResult()
+    {
+        // act
+        var result = HttpResult.NotFound();
+
+        // assert
+        result.HttpStatusCode.Should().Be(HttpStatusCode.NotFound);
+    }
+
+    [Fact]
+    public void NotFound_Typed_ReturnsHttpResult()
+    {
+        // act
+        var result = HttpResult.NotFound<string>();
+
+        // assert
+        result.HttpStatusCode.Should().Be(HttpStatusCode.NotFound);
+        result.Value.Should().BeNull();
+    }
+
+    [Fact]
     public void Failure_ReturnsHttpResult()
     {
         // arrange

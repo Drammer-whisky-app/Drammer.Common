@@ -50,7 +50,7 @@ public record HttpResult : Result
     /// </summary>
     /// <param name="errorCode"></param>
     /// <returns></returns>
-    public static HttpResult Unauthorized(string? errorCode = null) => Failure( HttpStatusCode.Unauthorized, errorCode, "Unauthorized request");
+    public static HttpResult Unauthorized(string? errorCode = null) => Failure(HttpStatusCode.Unauthorized, errorCode, "Unauthorized request");
 
     /// <summary>
     /// HTTP Unauthorized.
@@ -58,14 +58,14 @@ public record HttpResult : Result
     /// <param name="errorCode"></param>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
-    public static HttpResult<T> Unauthorized<T>(string? errorCode = null) => Failure<T>( HttpStatusCode.Unauthorized, errorCode, "Unauthorized request");
+    public static HttpResult<T> Unauthorized<T>(string? errorCode = null) => Failure<T>(HttpStatusCode.Unauthorized, errorCode, "Unauthorized request");
 
     /// <summary>
     /// HTTP Bad Request.
     /// </summary>
     /// <param name="errorCode"></param>
     /// <returns></returns>
-    public static HttpResult BadRequest(string? errorCode = null) => Failure( HttpStatusCode.BadRequest, errorCode, "Bad request");
+    public static HttpResult BadRequest(string? errorCode = null) => Failure(HttpStatusCode.BadRequest, errorCode, "Bad request");
 
     /// <summary>
     /// HTTP Bad Request.
@@ -73,7 +73,22 @@ public record HttpResult : Result
     /// <param name="errorCode"></param>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
-    public static HttpResult<T> BadRequest<T>(string? errorCode = null) => Failure<T>( HttpStatusCode.BadRequest, errorCode, "Bad request");
+    public static HttpResult<T> BadRequest<T>(string? errorCode = null) => Failure<T>(HttpStatusCode.BadRequest, errorCode, "Bad request");
+
+    /// <summary>
+    /// HTTP Not Found.
+    /// </summary>
+    /// <param name="errorCode"></param>
+    /// <returns></returns>
+    public static HttpResult NotFound(string? errorCode = null) => Failure(HttpStatusCode.NotFound, errorCode, "Not found");
+
+    /// <summary>
+    /// HTTP Not Found.
+    /// </summary>
+    /// <param name="errorCode"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    public static HttpResult<T> NotFound<T>(string? errorCode = null) => Failure<T>(HttpStatusCode.NotFound, errorCode, "Not found");
 
     /// <summary>
     /// HTTP failure.
