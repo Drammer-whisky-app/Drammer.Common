@@ -14,7 +14,7 @@ public sealed class HttpValidationResultTests
 
         var validationErrors = new Dictionary<string, string[]>
         {
-            { "key", new[] { "error" } }
+            { "key", ["error"]}
         };
 
         // act
@@ -26,6 +26,27 @@ public sealed class HttpValidationResultTests
     }
 
     [Fact]
+    public void Create_WithKeyAndValue_ReturnsHttpValidationResult()
+    {
+        // arrange
+        var httpStatusCode = _fixture.Create<HttpStatusCode>();
+        var errorKey = _fixture.Create<string>();
+        var errorValue = _fixture.Create<string>();
+
+        var expectedValidationError = new Dictionary<string, string[]>
+        {
+            { errorKey, [errorValue]}
+        };
+
+        // act
+        var result = HttpValidationResult.Create(errorKey, errorValue, httpStatusCode);
+
+        // assert
+        result.HttpStatusCode.Should().Be(httpStatusCode);
+        result.ValidationErrors.Should().BeEquivalentTo(expectedValidationError);
+    }
+
+    [Fact]
     public void Create_Typed_WithValidationErrors_ReturnsHttpValidationResult()
     {
         // arrange
@@ -33,7 +54,7 @@ public sealed class HttpValidationResultTests
 
         var validationErrors = new Dictionary<string, string[]>
         {
-            { "key", new[] { "error" } }
+            { "key", ["error"]}
         };
 
         // act
