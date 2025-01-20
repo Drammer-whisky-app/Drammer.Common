@@ -13,7 +13,7 @@ updates:
       - dependency-name: "*"
     ignore:
       - dependency-name: "FluentAssertions"
-        versions: [ ">=8.*" ]
+        versions: [ ">=8.0.0" ]
     groups:
       microsoft:
         patterns:
