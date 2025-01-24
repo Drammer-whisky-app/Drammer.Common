@@ -7,7 +7,7 @@ public sealed class HttpValidationResultTests
     private readonly Fixture _fixture = new();
 
     [Fact]
-    public void CreateFromDictionary_WithValidationErrors_ReturnsHttpValidationResult()
+    public void Create_WithValidationErrors_ReturnsHttpValidationResult()
     {
         // arrange
         var httpStatusCode = _fixture.Create<HttpStatusCode>();
@@ -18,7 +18,7 @@ public sealed class HttpValidationResultTests
         };
 
         // act
-        var result = HttpValidationResult.CreateFromDictionary(validationErrors, httpStatusCode);
+        var result = HttpValidationResult.Create(validationErrors, httpStatusCode);
 
         // assert
         result.HttpStatusCode.Should().Be(httpStatusCode);

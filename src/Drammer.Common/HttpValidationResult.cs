@@ -26,7 +26,7 @@ public sealed record HttpValidationResult : HttpResult, IValidationResult
     /// <param name="errors"></param>
     /// <param name="httpStatusCode"></param>
     /// <returns></returns>
-    public static HttpValidationResult CreateFromDictionary(
+    public static HttpValidationResult Create(
         IDictionary<string, string[]>? errors,
         HttpStatusCode httpStatusCode = HttpStatusCode.BadRequest) => new(errors, httpStatusCode);
 
