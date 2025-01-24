@@ -26,7 +26,7 @@ public sealed record HttpValidationResult : HttpResult, IValidationResult
     /// <param name="errors"></param>
     /// <param name="httpStatusCode"></param>
     /// <returns></returns>
-    public static HttpValidationResult Create(
+    public static HttpValidationResult CreateFromDictionary(
         IDictionary<string, string[]>? errors,
         HttpStatusCode httpStatusCode = HttpStatusCode.BadRequest) => new(errors, httpStatusCode);
 
@@ -46,15 +46,4 @@ public sealed record HttpValidationResult : HttpResult, IValidationResult
             {errorKey, [errorValue]}
         },
         httpStatusCode);
-
-    /// <summary>
-    /// Create a new instance of <see cref="HttpValidationResult"/>.
-    /// </summary>
-    /// <param name="errors"></param>
-    /// <param name="httpStatusCode"></param>
-    /// <typeparam name="T"></typeparam>
-    /// <returns></returns>
-    public static HttpValidationResult Create<T>(
-        IDictionary<string, string[]>? errors,
-        HttpStatusCode httpStatusCode = HttpStatusCode.BadRequest) => new(errors, httpStatusCode);
 }
