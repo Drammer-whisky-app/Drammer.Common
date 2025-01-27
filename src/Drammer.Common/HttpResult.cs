@@ -34,16 +34,18 @@ public record HttpResult : Result
     /// <summary>
     /// HTTP OK.
     /// </summary>
+    /// <param name="httpStatusCode">The HTTP status code.</param>
     /// <returns></returns>
-    public static HttpResult Ok() => new(true, HttpStatusCode.OK);
+    public static HttpResult Ok(HttpStatusCode httpStatusCode = HttpStatusCode.OK) => new(true, httpStatusCode);
 
     /// <summary>
     /// Http OK.
     /// </summary>
     /// <param name="value"></param>
+    /// <param name="httpStatusCode">The HTTP status code.</param>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
-    public static HttpResult<T> Ok<T>(T value) => new(value);
+    public static HttpResult<T> Ok<T>(T value, HttpStatusCode httpStatusCode = HttpStatusCode.OK) => new(value, httpStatusCode);
 
     /// <summary>
     /// HTTP Unauthorized.

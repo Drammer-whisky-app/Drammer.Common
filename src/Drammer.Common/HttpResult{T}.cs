@@ -19,8 +19,8 @@ public record HttpResult<T> : HttpResult
         IsSuccess = isSuccess;
     }
 
-    protected internal HttpResult(T value)
-        : base(true, HttpStatusCode.OK)
+    protected internal HttpResult(T value, HttpStatusCode httpStatusCode = HttpStatusCode.OK)
+        : base(true, httpStatusCode)
     {
         Value = value;
         IsSuccess = true;
