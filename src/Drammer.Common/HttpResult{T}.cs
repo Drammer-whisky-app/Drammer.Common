@@ -16,14 +16,12 @@ public record HttpResult<T> : HttpResult
         string? message = null,
         Exception? exception = null) : base(isSuccess, httpStatusCode, errorCode, message, exception)
     {
-        IsSuccess = isSuccess;
     }
 
     protected internal HttpResult(T value, HttpStatusCode httpStatusCode = HttpStatusCode.OK)
         : base(true, httpStatusCode)
     {
         Value = value;
-        IsSuccess = true;
     }
 
     /// <summary>
@@ -33,5 +31,5 @@ public record HttpResult<T> : HttpResult
 
     /// <inheritdoc />
     [MemberNotNullWhen(true, nameof(Value))]
-    public override bool IsSuccess { get; }
+    public override bool IsHttp200Ok => HttpStatusCode == HttpStatusCode.OK;
 }

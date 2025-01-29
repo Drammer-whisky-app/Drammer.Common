@@ -32,11 +32,22 @@ public record HttpResult : Result
     public string? ErrorCode { get; }
 
     /// <summary>
+    /// Gets a value indicating whether the HTTP status code is 200 OK.
+    /// </summary>
+    public virtual bool IsHttp200Ok => HttpStatusCode == HttpStatusCode.OK;
+
+    /// <summary>
     /// HTTP OK.
     /// </summary>
     /// <param name="httpStatusCode">The HTTP status code.</param>
     /// <returns></returns>
     public static HttpResult Ok(HttpStatusCode httpStatusCode = HttpStatusCode.OK) => new(true, httpStatusCode);
+
+    /// <summary>
+    /// HTTP No Content.
+    /// </summary>
+    /// <returns></returns>
+    public static HttpResult NoContent() => new(true, HttpStatusCode.NoContent);
 
     /// <summary>
     /// Http OK.
@@ -46,6 +57,13 @@ public record HttpResult : Result
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
     public static HttpResult<T> Ok<T>(T value, HttpStatusCode httpStatusCode = HttpStatusCode.OK) => new(value, httpStatusCode);
+
+    /// <summary>
+    /// Http No Content.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    public static HttpResult<T> NoContent<T>() => new(true, HttpStatusCode.NoContent);
 
     /// <summary>
     /// HTTP Unauthorized.
