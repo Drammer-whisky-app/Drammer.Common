@@ -190,4 +190,22 @@ public sealed class StringExtensionsTests
         // assert
         result.Should().Be(expected);
     }
+
+    [Fact]
+    public void ReplaceValues_ReturnsReplacedText()
+    {
+        // arrange
+        const string Input = "abc def ghi";
+        var replacements = new Dictionary<string, string>
+        {
+            {"def", "jkl"},
+            {"ghi", "mno"}
+        };
+
+        // act
+        var result = Input.ReplaceValues(replacements);
+
+        // assert
+        result.Should().Be("abc jkl mno");
+    }
 }

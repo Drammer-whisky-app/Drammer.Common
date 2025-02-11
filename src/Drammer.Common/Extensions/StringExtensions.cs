@@ -223,6 +223,28 @@ public static partial class StringExtensions
     }
 
     /// <summary>
+    /// Replaces values in a string.
+    /// </summary>
+    /// <param name="input"></param>
+    /// <param name="replacements"></param>
+    /// <returns></returns>
+    [return: NotNullIfNotNull(nameof(input))]
+    public static string? ReplaceValues(this string? input, IReadOnlyDictionary<string, string> replacements)
+    {
+        if (string.IsNullOrWhiteSpace(input) || replacements.IsNullOrEmpty())
+        {
+            return input;
+        }
+
+        foreach(var (key, value) in replacements)
+        {
+            input = input.Replace(key, value);
+        }
+
+        return input;
+    }
+
+    /// <summary>
     /// Removes all HTML tags from a string.
     /// </summary>
     /// <param name="input">The input.</param>
