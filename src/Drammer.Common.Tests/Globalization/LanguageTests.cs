@@ -11,12 +11,25 @@ public sealed class LanguageTests
     [InlineData("test", "en")]
     [InlineData("", "en")]
     [InlineData(null, "en")]
-    public void FromString(string? input, string expectedValue)
+    public void ToLanguageOrDefault(string? input, string expectedValue)
     {
         // Act
-        var result = Language.FromString(input);
+        var result = Language.ToLanguageOrDefault(input);
 
         // Assert
         result.Value.Should().Be(expectedValue);
+    }
+
+    [Theory]
+    [InlineData("")]
+    [InlineData(" ")]
+    [InlineData(null)]
+    public void ToLanguageOrNull_WithValidInput_ShouldReturnNull(string? input)
+    {
+        // Act
+        var result = Language.ToLanguageOrNull(input);
+
+        // Assert
+        result.Should().BeNull();
     }
 }

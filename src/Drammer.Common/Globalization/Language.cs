@@ -18,7 +18,7 @@ public record struct Language
     /// </summary>
     /// <param name="value"></param>
     /// <returns></returns>
-    public static Language FromString(string? value)
+    public static Language ToLanguageOrDefault(string? value)
     {
         if (value == null)
         {
@@ -32,6 +32,29 @@ public record struct Language
             LanguageDutch => Dutch,
             LanguageGerman => German,
             _ => English
+        };
+    }
+
+    /// <summary>
+    /// Constructs a new instance of <see cref="Language"/> based on the input value.
+    /// When the value is not found, the default value is null.
+    /// </summary>
+    /// <param name="value"></param>
+    /// <returns></returns>
+    public static Language? ToLanguageOrNull(string? value)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            return null;
+        }
+
+        var v = value.ToLowerInvariant().Trim();
+        return v switch
+        {
+            LanguageEnglish => English,
+            LanguageDutch => Dutch,
+            LanguageGerman => German,
+            _ => null
         };
     }
 }

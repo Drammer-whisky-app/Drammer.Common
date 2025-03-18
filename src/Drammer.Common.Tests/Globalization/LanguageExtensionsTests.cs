@@ -8,7 +8,7 @@ public sealed class LanguageExtensionsTests
     public void IsEnglish_WhenEnglish_ReturnsTrue()
     {
         // Arrange
-        var language = Language.FromString("en");
+        var language = Language.ToLanguageOrNull("en") ?? throw new InvalidOperationException("Language not found");
 
         // Act
         var result = language.IsEnglish();
@@ -21,7 +21,7 @@ public sealed class LanguageExtensionsTests
     public void IsEnglish_WhenDutch_ReturnsFalse()
     {
         // Arrange
-        var language = Language.FromString("nl");
+        var language = Language.ToLanguageOrNull("nl") ?? throw new InvalidOperationException("Language not found");
 
         // Act
         var result = language.IsEnglish();
@@ -34,7 +34,7 @@ public sealed class LanguageExtensionsTests
     public void IsGerman_WhenGerman_ReturnsTrue()
     {
         // Arrange
-        var language = Language.FromString("de");
+        var language = Language.ToLanguageOrNull("de") ?? throw new InvalidOperationException("Language not found");
 
         // Act
         var result = language.IsGerman();
@@ -47,7 +47,7 @@ public sealed class LanguageExtensionsTests
     public void IsGerman_WhenDutch_ReturnsFalse()
     {
         // Arrange
-        var language = Language.FromString("nl");
+        var language = Language.ToLanguageOrNull("nl") ?? throw new InvalidOperationException("Language not found");
 
         // Act
         var result = language.IsGerman();
@@ -60,7 +60,7 @@ public sealed class LanguageExtensionsTests
     public void IsDutch_WhenDutch_ReturnsTrue()
     {
         // Arrange
-        var language = Language.FromString("nl");
+        var language = Language.ToLanguageOrNull("nl") ?? throw new InvalidOperationException("Language not found");
 
         // Act
         var result = language.IsDutch();
@@ -73,7 +73,7 @@ public sealed class LanguageExtensionsTests
     public void IsDutch_WhenGerman_ReturnsFalse()
     {
         // Arrange
-        var language = Language.FromString("de");
+        var language = Language.ToLanguageOrNull("de") ?? throw new InvalidOperationException("Language not found");
 
         // Act
         var result = language.IsDutch();
