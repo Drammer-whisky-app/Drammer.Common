@@ -208,4 +208,28 @@ public sealed class StringExtensionsTests
         // assert
         result.Should().Be("abc jkl mno");
     }
+
+    [Theory]
+    [InlineData(null, null)]
+    [InlineData("", "")]
+    [InlineData("https://drammer.com", "")]
+    [InlineData("http://drammer.com", "")]
+    [InlineData("//drammer.com", "")]
+    [InlineData("drammer.com", "")]
+    [InlineData("drammer.com?a=b", "")]
+    [InlineData("www.drammer.com", "")]
+    [InlineData("prefix http://drammer.com", "prefix")]
+    [InlineData("http://drammer.com suffix", "suffix")]
+    [InlineData("prefix http://drammer.com suffix", "prefix suffix")]
+    [InlineData("prefix www.drammer.com suffix", "prefix suffix")]
+    [InlineData("prefix drammer.com suffix", "prefix suffix")]
+    [InlineData("prefix drammer. com suffix", "prefix drammer. com suffix")]
+    public void RemoveUrls_ReturnsTextWithoutUrls(string? input, string? expected)
+    {
+        // act
+        var result = input.RemoveUrls();
+
+        // assert
+        result.Should().Be(expected);
+    }
 }

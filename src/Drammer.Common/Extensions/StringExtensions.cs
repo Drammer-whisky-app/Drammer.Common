@@ -314,6 +314,22 @@ public static partial class StringExtensions
         return source.Remove(place, find.Length).Insert(place, replace);
     }
 
+    /// <summary>
+    /// Removes URLs from a string.
+    /// </summary>
+    /// <param name="input">The input.</param>
+    /// <returns></returns>
+    [return: NotNullIfNotNull(nameof(input))]
+    public static string? RemoveUrls(this string? input)
+    {
+        if (string.IsNullOrWhiteSpace(input))
+        {
+            return input;
+        }
+
+        return RemoveUrlsRegex().Replace(input, string.Empty).Replace("  ", " ").Trim();
+    }
+
     [GeneratedRegex("[^\\w\\d\\s.,+-\\\\&#$%^(()\"'!*|\\[\\]]", RegexOptions.IgnoreCase)]
     private static partial Regex SanitizeRegex();
 
@@ -322,4 +338,7 @@ public static partial class StringExtensions
 
     [GeneratedRegex("\\s{2,}")]
     private static partial Regex NormalizeHtmlRegex();
+
+    [GeneratedRegex(@"(?:https?:\/\/|www\.|\/\/)?\b[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}\b(?:[\/\?][^\s]*)?")]
+    private static partial Regex RemoveUrlsRegex();
 }
