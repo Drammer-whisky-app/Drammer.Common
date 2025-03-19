@@ -1,6 +1,6 @@
 ﻿namespace Drammer.Common.Globalization;
 
-public record struct Language
+public sealed record Language
 {
     private const string LanguageDutch = "nl";
     private const string LanguageGerman = "de";
