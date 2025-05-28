@@ -54,6 +54,9 @@ public sealed class StringExtensionsTests
 
     [Theory]
     [InlineData("abc123", "abc123")]
+    [InlineData("ßæøå", "ßæøå")]
+    [InlineData("⚠", "")]
+    [InlineData("\u200B\u200D\u200F\uFEFF", "")]
     [InlineData("abc123!@#$%^&*()", "abc123!@#$%^&*()")]
     public void SanitizeText_ReturnsSanitizedText(string input, string expected)
     {
