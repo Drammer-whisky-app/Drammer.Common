@@ -16,7 +16,7 @@ public static partial class DrmId
     /// <returns>
     /// The <see cref="int"/>. Null when not found.
     /// </returns>
-    public static int? Parse(string? input)
+    public static long? Parse(string? input)
     {
         if (string.IsNullOrWhiteSpace(input))
         {
@@ -27,7 +27,7 @@ public static partial class DrmId
 
         var r = DrmRegex();
         var match = r.Match(sanitized);
-        if (match.Groups.Count > 1 && int.TryParse(match.Groups[1].Value, out var value))
+        if (match.Groups.Count > 1 && long.TryParse(match.Groups[1].Value, out var value))
         {
             return value;
         }
