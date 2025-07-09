@@ -1,6 +1,5 @@
 ﻿using System.Globalization;
 using Drammer.Common.ComponentModel;
-using FluentAssertions;
 
 namespace Drammer.Common.Tests.ComponentModel;
 

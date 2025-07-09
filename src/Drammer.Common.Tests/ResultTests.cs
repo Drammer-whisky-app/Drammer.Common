@@ -1,6 +1,4 @@
-﻿using FluentAssertions;
-
-namespace Drammer.Common.Tests;
+﻿namespace Drammer.Common.Tests;
 
 public sealed class ResultTests
 {

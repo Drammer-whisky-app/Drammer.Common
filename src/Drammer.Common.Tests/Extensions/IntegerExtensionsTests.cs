@@ -1,5 +1,4 @@
 ﻿using Drammer.Common.Extensions;
-using FluentAssertions;
 
 namespace Drammer.Common.Tests.Extensions;
 
