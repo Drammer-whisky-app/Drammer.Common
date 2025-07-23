@@ -1,6 +1,6 @@
 ﻿namespace Drammer.Common;
 
-public record Result
+public class Result
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="Result"/> class.

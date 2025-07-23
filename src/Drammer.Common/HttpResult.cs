@@ -5,7 +5,7 @@ namespace Drammer.Common;
 /// <summary>
 /// The HTTP result.
 /// </summary>
-public record HttpResult : Result
+public class HttpResult : Result
 {
     protected internal HttpResult(
         bool isSuccess,

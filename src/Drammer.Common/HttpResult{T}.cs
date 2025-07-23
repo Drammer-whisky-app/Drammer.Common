@@ -7,7 +7,7 @@ namespace Drammer.Common;
 /// The HTTP result.
 /// </summary>
 /// <typeparam name="T">The value type.</typeparam>
-public record HttpResult<T> : HttpResult
+public class HttpResult<T> : HttpResult
 {
     protected internal HttpResult(
         bool isSuccess,

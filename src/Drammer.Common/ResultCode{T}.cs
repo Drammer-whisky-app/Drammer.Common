@@ -1,6 +1,6 @@
 ﻿namespace Drammer.Common;
 
-public sealed record ResultCode<T> : Result<T>
+public sealed class ResultCode<T> : Result<T>
 {
     internal ResultCode(bool isSuccess, int code, string? message = null, Exception? exception = null) : base(
         isSuccess,

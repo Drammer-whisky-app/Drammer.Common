@@ -5,7 +5,7 @@ namespace Drammer.Common;
 /// <summary>
 /// The HTTP validation result.
 /// </summary>
-public sealed record HttpValidationResult<T> : HttpResult<T>, IValidationResult
+public sealed class HttpValidationResult<T> : HttpResult<T>, IValidationResult
 {
     internal HttpValidationResult(
         IDictionary<string, string[]>? validationErrors,
