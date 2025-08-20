@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using Microsoft.Extensions.ObjectPool;
 
 namespace Drammer.Common.Text;
 
@@ -20,17 +21,26 @@ public static class RandomText
     /// </returns>
     public static string Generate(int length = 6, bool replaceVowels = true)
     {
-        var builder = new StringBuilder();
-        for (var i = 0; i < length; i++)
+        var pool = ObjectPool.Create<StringBuilder>();
+        var builder = pool.Get();
+
+        try
         {
-            var ch = Convert.ToChar(Convert.ToInt32(Math.Floor((26 * System.Random.Shared.NextDouble()) + 65)));
-            builder.Append(ch);
+            for (var i = 0; i < length; i++)
+            {
+                var ch = Convert.ToChar(Convert.ToInt32(Math.Floor((26 * System.Random.Shared.NextDouble()) + 65)));
+                builder.Append(ch);
+            }
+
+            var ret = builder.ToString().ToLowerInvariant();
+
+            // replace vowels and other chars that can form a word
+            return replaceVowels ? ret.MultiReplace(Vowels) : ret;
         }
-
-        var ret = builder.ToString().ToLowerInvariant();
-
-        // replace vowels and other chars that can form a word
-        return replaceVowels ? ret.MultiReplace(Vowels) : ret;
+        finally
+        {
+            pool.Return(builder);
+        }
     }
 
     private static string MultiReplace(this string s, string[] needles)

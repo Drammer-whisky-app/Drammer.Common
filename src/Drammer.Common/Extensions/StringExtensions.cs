@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.Text;
 using System.Text.RegularExpressions;
+using Microsoft.Extensions.ObjectPool;
 
 namespace Drammer.Common.Extensions;
 
@@ -29,18 +30,27 @@ public static partial class StringExtensions
             return emailAddress;
         }
 
-        var sb = new StringBuilder();
-        if (split[0].Length <= 3)
-        {
-            sb.Append(split[0][0] + new string('*', split[0].Length - 1));
-        }
-        else
-        {
-            sb.Append(split[0].Substring(0, 2) + new string('*', split[0].Length - 2));
-        }
+        var pool = ObjectPool.Create<StringBuilder>();
+        var sb = pool.Get();
 
-        sb.Append("@" + split[1]);
-        return sb.ToString();
+        try
+        {
+            if (split[0].Length <= 3)
+            {
+                sb.Append(split[0][0] + new string('*', split[0].Length - 1));
+            }
+            else
+            {
+                sb.Append(split[0].Substring(0, 2) + new string('*', split[0].Length - 2));
+            }
+
+            sb.Append("@" + split[1]);
+            return sb.ToString();
+        }
+        finally
+        {
+            pool.Return(sb);
+        }
     }
 
     /// <summary>
