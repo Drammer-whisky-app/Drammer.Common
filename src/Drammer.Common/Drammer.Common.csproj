@@ -8,7 +8,7 @@
 
         <GenerateDocumentationFile>True</GenerateDocumentationFile>
         <Authors>Marthijn van den Heuvel,Drammer</Authors>
-        <Copyright>Copyright (c) 2024 Drammer whisky app</Copyright>
+        <Copyright>Copyright (c) 2024-2025 Drammer whisky app</Copyright>
         <PackageId>Drammer.Common</PackageId>
         <RepositoryType>git</RepositoryType>
         <PackageReadmeFile>README.md</PackageReadmeFile>
