@@ -15,42 +15,28 @@ public static partial class StringExtensions
     /// Obfuscates an email address.
     /// </summary>
     /// <param name="emailAddress">The email address.</param>
-    /// <param name="pool">The object pool.</param>
     /// <returns>A <see cref="string"/>.</returns>
     [return: NotNullIfNotNull(nameof(emailAddress))]
-    public static string? ObfuscateEmailAddress(this string? emailAddress, ObjectPool<StringBuilder>? pool = null)
+    [Obsolete("Use ObfuscateEmailAddress(ObjectPool<StringBuilder>) instead.")]
+    public static string? ObfuscateEmailAddress(this string? emailAddress) => ObfuscateEmailAddress(new StringBuilder(), emailAddress);
+
+    /// <summary>
+    /// Obfuscates an email address.
+    /// </summary>
+    /// <param name="emailAddress">The email address.</param>
+    /// <param name="objectPool">The object pool.</param>
+    /// <returns>A <see cref="string"/>.</returns>
+    [return: NotNullIfNotNull(nameof(emailAddress))]
+    public static string? ObfuscateEmailAddress(this string? emailAddress, ObjectPool<StringBuilder> objectPool)
     {
-        if (string.IsNullOrWhiteSpace(emailAddress) || !emailAddress.Contains('@'))
-        {
-            return emailAddress;
-        }
-
-        var split = emailAddress.Split('@');
-        if (split.Length != 2)
-        {
-            return emailAddress;
-        }
-
-        var internalPool = pool ?? ObjectPool.Create<StringBuilder>();
-        var sb = internalPool.Get();
-
+        var sb = objectPool.Get();
         try
         {
-            if (split[0].Length <= 3)
-            {
-                sb.Append(split[0][0] + new string('*', split[0].Length - 1));
-            }
-            else
-            {
-                sb.Append(split[0].Substring(0, 2) + new string('*', split[0].Length - 2));
-            }
-
-            sb.Append("@" + split[1]);
-            return sb.ToString();
+            return ObfuscateEmailAddress(sb, emailAddress, objectPool);
         }
         finally
         {
-            internalPool.Return(sb);
+            objectPool.Return(sb);
         }
     }
 
@@ -339,6 +325,36 @@ public static partial class StringExtensions
         }
 
         return RemoveUrlsRegex().Replace(input, string.Empty).Replace("  ", " ").Trim();
+    }
+
+    [return: NotNullIfNotNull(nameof(emailAddress))]
+    private static string? ObfuscateEmailAddress(
+        StringBuilder sb,
+        string? emailAddress,
+        ObjectPool<StringBuilder>? pool = null)
+    {
+        if (string.IsNullOrWhiteSpace(emailAddress) || !emailAddress.Contains('@'))
+        {
+            return emailAddress;
+        }
+
+        var split = emailAddress.Split('@');
+        if (split.Length != 2)
+        {
+            return emailAddress;
+        }
+
+        if (split[0].Length <= 3)
+        {
+            sb.Append(split[0][0] + new string('*', split[0].Length - 1));
+        }
+        else
+        {
+            sb.Append(split[0].Substring(0, 2) + new string('*', split[0].Length - 2));
+        }
+
+        sb.Append("@" + split[1]);
+        return sb.ToString();
     }
 
     [GeneratedRegex("[^\\w\\d\\s.,+-\\\\&#$%^(()\"'!*|\\[\\]]", RegexOptions.IgnoreCase)]

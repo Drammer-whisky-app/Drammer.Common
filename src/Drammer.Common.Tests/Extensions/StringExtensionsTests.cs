@@ -1,4 +1,6 @@
-﻿using Drammer.Common.Extensions;
+﻿using System.Text;
+using Drammer.Common.Extensions;
+using Microsoft.Extensions.ObjectPool;
 
 namespace Drammer.Common.Tests.Extensions;
 
@@ -16,6 +18,25 @@ public sealed class StringExtensionsTests
     {
         // act
         var result = input.ObfuscateEmailAddress();
+
+        // assert
+        result.Should().NotBeNull();
+        result.Should().Be(expected);
+    }
+
+    [Theory]
+    [InlineData("test@drammer.com", "te**@drammer.com")]
+    [InlineData("tes@drammer.com", "t**@drammer.com")]
+    [InlineData("longaddress@drammer.com", "lo*********@drammer.com")]
+    [InlineData("", "")]
+    [InlineData("test@drammer@.com", "test@drammer@.com")]
+    public void ObfuscateEmailAddress_WithObjectPool_ReturnObfuscatedEmailAddress(string input, string expected)
+    {
+        // arrange
+        var objectPool = ObjectPool.Create<StringBuilder>();
+
+        // act
+        var result = input.ObfuscateEmailAddress(objectPool);
 
         // assert
         result.Should().NotBeNull();
