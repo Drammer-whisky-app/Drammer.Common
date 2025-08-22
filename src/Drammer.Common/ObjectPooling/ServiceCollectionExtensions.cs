@@ -10,8 +10,10 @@ public static class ServiceCollectionExtensions
     /// Adds an object pool of string builders to the service collection.
     /// </summary>
     /// <param name="serviceCollection">The service collection.</param>
+    /// <param name="initialCapacity">The initial capacity.</param>
+    /// <param name="maxRetainedCapacity">The max retained capacity.</param>
     /// <returns>The <see cref="IServiceCollection"/>.</returns>
-    public static IServiceCollection AddStringBuilderObjectPool(this IServiceCollection serviceCollection)
+    public static IServiceCollection AddStringBuilderObjectPool(this IServiceCollection serviceCollection, int initialCapacity = 256, int maxRetainedCapacity = 1024)
     {
         const string ObjectPoolProviderKey = $"{nameof(Drammer)}.{nameof(ObjectPoolProvider)}";
 
@@ -19,7 +21,7 @@ public static class ServiceCollectionExtensions
         serviceCollection.AddSingleton<ObjectPool<StringBuilder>>(sp =>
         {
             var provider = sp.GetRequiredKeyedService<ObjectPoolProvider>(ObjectPoolProviderKey);
-            return provider.Create(new DefaultPooledObjectPolicy<StringBuilder>());
+            return provider.Create(new StringBuilderPolicy(initialCapacity, maxRetainedCapacity));
         });
 
         return serviceCollection;
