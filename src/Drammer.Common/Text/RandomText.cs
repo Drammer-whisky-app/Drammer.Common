@@ -16,13 +16,14 @@ public static class RandomText
     /// <param name="replaceVowels">
     /// The replace vowels.
     /// </param>
+    /// <param name="pool">The object pool.</param>
     /// <returns>
     /// The random string.
     /// </returns>
-    public static string Generate(int length = 6, bool replaceVowels = true)
+    public static string Generate(int length = 6, bool replaceVowels = true, ObjectPool<StringBuilder>? pool = null)
     {
-        var pool = ObjectPool.Create<StringBuilder>();
-        var builder = pool.Get();
+        var internalPool = pool ?? ObjectPool.Create<StringBuilder>();
+        var builder = internalPool.Get();
 
         try
         {
@@ -39,7 +40,7 @@ public static class RandomText
         }
         finally
         {
-            pool.Return(builder);
+            internalPool.Return(builder);
         }
     }
 

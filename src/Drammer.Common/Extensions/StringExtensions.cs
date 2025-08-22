@@ -15,9 +15,10 @@ public static partial class StringExtensions
     /// Obfuscates an email address.
     /// </summary>
     /// <param name="emailAddress">The email address.</param>
+    /// <param name="pool">The object pool.</param>
     /// <returns>A <see cref="string"/>.</returns>
     [return: NotNullIfNotNull(nameof(emailAddress))]
-    public static string? ObfuscateEmailAddress(this string? emailAddress)
+    public static string? ObfuscateEmailAddress(this string? emailAddress, ObjectPool<StringBuilder>? pool = null)
     {
         if (string.IsNullOrWhiteSpace(emailAddress) || !emailAddress.Contains('@'))
         {
@@ -30,8 +31,8 @@ public static partial class StringExtensions
             return emailAddress;
         }
 
-        var pool = ObjectPool.Create<StringBuilder>();
-        var sb = pool.Get();
+        var internalPool = pool ?? ObjectPool.Create<StringBuilder>();
+        var sb = internalPool.Get();
 
         try
         {
@@ -49,7 +50,7 @@ public static partial class StringExtensions
         }
         finally
         {
-            pool.Return(sb);
+            internalPool.Return(sb);
         }
     }
 
