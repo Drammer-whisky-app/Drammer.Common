@@ -20,7 +20,7 @@ public static class RandomText
     /// <returns>
     /// The random string.
     /// </returns>
-    [Obsolete("Use overload with IObjectPoolService<StringBuilder> parameter instead.")]
+    [Obsolete("Use overload with ObjectPool<StringBuilder> parameter instead.")]
     public static string Generate(
         int length = 6,
         bool replaceVowels = true)
