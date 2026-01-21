@@ -79,6 +79,9 @@ public sealed class StringExtensionsTests
     [InlineData("⚠", "")]
     [InlineData("\u200B\u200D\u200F\uFEFF", "")]
     [InlineData("abc123!@#$%^&*()", "abc123!@#$%^&*()")]
+    [InlineData("test\n\n\n\ntest", "test\n\ntest")]
+    [InlineData("test\n\n\ntest", "test\n\ntest")]
+    [InlineData("test\ntest", "test\ntest")]
     public void SanitizeText_ReturnsSanitizedText(string input, string expected)
     {
         // act
@@ -170,13 +173,27 @@ public sealed class StringExtensionsTests
     public void RemoveHtmlTags_TagsRemoved()
     {
         // arrange
-        const string Input = "<html><body>text<img src=\"\"/><p>text</p></body></html>";
+        const string Input = "<html><body>text<img src=\"\"/><p>text\ntext</p>\n\n\n\ntext</body></html>";
 
         // act
         var result = Input.RemoveHtmlTags();
 
         // assert
-        result.Should().Be("texttext");
+        result.Should().Be("texttext\ntext\n\ntext");
+    }
+
+    [Theory]
+    [InlineData("text\ntext", "text\ntext")]
+    [InlineData("text\n\ntext", "text\n\ntext")]
+    [InlineData("text\n\n\ntext", "text\n\ntext")]
+    [InlineData("text  text", "text text")]
+    public void RemoveHtmlTags_WithoutHtml_Returns(string input, string expected)
+    {
+        // act
+        var result = input.RemoveHtmlTags();
+
+        // assert
+        result.Should().Be(expected);
     }
 
     [Theory]

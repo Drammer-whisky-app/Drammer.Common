@@ -99,7 +99,8 @@ public static partial class StringExtensions
             return null;
         }
 
-        return SanitizeRegex().Replace(input, string.Empty).Trim();
+        var sanitize = SanitizeRegex().Replace(input, string.Empty).Trim();
+        return RemoveTooManyNewlinesRegex().Replace(sanitize, "\n\n").Trim();
     }
 
     /// <summary>
@@ -259,7 +260,10 @@ public static partial class StringExtensions
         var noHtml = RemoveHtmlTagsRegex().Replace(input, string.Empty).Trim();
 
         // normalize
-        return NormalizeHtmlRegex().Replace(noHtml, " ");
+        var normalized = NormalizeHtmlRegex().Replace(noHtml, " ");
+
+        // remove new lines
+        return RemoveTooManyNewlinesRegex().Replace(normalized, "\n\n").Trim();
     }
     
     /// <summary>
@@ -363,9 +367,12 @@ public static partial class StringExtensions
     [GeneratedRegex("<[^>]+>|&nbsp;")]
     private static partial Regex RemoveHtmlTagsRegex();
 
-    [GeneratedRegex("\\s{2,}")]
+    [GeneratedRegex("[^\\S\\r\\n]+")]
     private static partial Regex NormalizeHtmlRegex();
 
     [GeneratedRegex(@"(?:https?:\/\/|www\.|\/\/)?\b[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}\b(?:[\/\?][^\s]*)?")]
     private static partial Regex RemoveUrlsRegex();
+
+    [GeneratedRegex(@"(\r?\n){3,}")]
+    private static partial Regex RemoveTooManyNewlinesRegex();
 }
