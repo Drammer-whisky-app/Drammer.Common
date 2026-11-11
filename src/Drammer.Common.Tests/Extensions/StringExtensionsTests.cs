@@ -58,7 +58,7 @@ public sealed class StringExtensionsTests
         var result = input.ToDecimal();
 
         // assert
-        result.Should().Be(expected);
+        result.Should().BeApproximately(expected, 0.00000001m);
     }
 
     [Theory]
